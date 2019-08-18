@@ -212,4 +212,35 @@ class QuizService
         }
         return $attempt;
     }
+
+    public function newQuiz($title)
+    {
+        $quizRepository = new QuizRepository();
+        return $quizRepository->create(['title' => $title]);
+    }
+
+    public function newQuestion($data)
+    {
+        $quizId = Session::getInstance()->get('quiz_id');
+        $text = $data['text'];
+        $questionRepository = new QuestionRepository();
+        $question = $questionRepository->create(['text' => $text, 'quiz_id' => $quizId]);
+
+        $answer1 = $data['answer1'];
+        $correct1 = (isset($data['correct1'])) ? true : false;
+        $answer2 = $data['answer2'];
+        $correct2 = (isset($data['correct2'])) ? true : false;
+        $answer3 = $data['answer3'];
+        $correct3 = (isset($data['correct3'])) ? true : false;
+        $answer4 = $data['answer4'];
+        $correct4 = (isset($data['correct4'])) ? true : false;
+
+        $answerRepository = new AnswerRepository();
+        $answerRepository->create(['text' => $answer1, 'is_correct' => $correct1, 'question_id' => $question->id]);
+        $answerRepository->create(['text' => $answer2, 'is_correct' => $correct2, 'question_id' => $question->id]);
+        $answerRepository->create(['text' => $answer3, 'is_correct' => $correct3, 'question_id' => $question->id]);
+        $answerRepository->create(['text' => $answer4, 'is_correct' => $correct4, 'question_id' => $question->id]);
+
+        return $question;
+    }
 }
