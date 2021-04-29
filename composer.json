@@ -3,7 +3,7 @@
     "require": {
       "ext-json": "*",
       "ext-pdo": "*",
-        "illuminate/database": "^5.8"
+        "illuminate/database": "^6.20"
     },
 	"autoload": {
     	"psr-4": {
